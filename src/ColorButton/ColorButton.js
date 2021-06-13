@@ -6,7 +6,8 @@ class ColorButton extends React.Component {
 
     state = {
         color: 'red',
-        colorInText: 'blue'
+        colorInText: 'blue',
+        isChecked: false
     }
 
     changeColor = () => {
@@ -25,15 +26,29 @@ class ColorButton extends React.Component {
         });
     }
 
+    handleCheckboxChanged = e => {
+        this.setState( {
+            isChecked: e.target.checked
+        });
+    }
+
     render() {
         return (
             <div className={classes.container}>
                 <button
                     onClick={this.changeColor}
                     style={{ backgroundColor: this.state.color}}
-                    className={classes.colorButton} >
+                    className={classes.colorButton}
+                    disabled={this.state.isChecked}
+                >
                 {`Change to ${this.state.colorInText}`}
                 </button>
+                <input
+                    defaultChecked={this.state.isChecked}
+                    type="checkbox"
+                    onChange={this.handleCheckboxChanged}
+                    aria-checked={this.state.isChecked}
+                />
             </div>
         )
     }
