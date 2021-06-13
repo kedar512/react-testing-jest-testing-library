@@ -45,10 +45,12 @@ class ColorButton extends React.Component {
                 </button>
                 <input
                     defaultChecked={this.state.isChecked}
+                    id="disable-button-checkbox"
                     type="checkbox"
                     onChange={this.handleCheckboxChanged}
                     aria-checked={this.state.isChecked}
                 />
+                <label htmlFor="disable-button-checkbox">Disable button</label>
             </div>
         )
     }
