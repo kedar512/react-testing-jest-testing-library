@@ -2,6 +2,10 @@ import React from 'react';
 
 import classes from './ColorButton.module.css';
 
+export function replaceCamelCaseWithSpaces (colorName) {
+    return colorName.replace(/\B([A-Z])\B/g, ' $1');
+}
+
 class ColorButton extends React.Component {
 
     state = {
