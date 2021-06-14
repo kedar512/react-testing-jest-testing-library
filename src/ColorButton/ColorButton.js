@@ -9,22 +9,22 @@ export function replaceCamelCaseWithSpaces (colorName) {
 class ColorButton extends React.Component {
 
     state = {
-        color: 'red',
-        colorInText: 'blue',
+        color: 'MediumVioletRed',
+        colorInText: replaceCamelCaseWithSpaces('MidnightBlue'),
         isChecked: false
     }
 
     changeColor = () => {
         this.setState( prevState => {
-            if (prevState.color === 'blue') {
+            if (prevState.color === 'MidnightBlue') {
                 return {
-                    color: 'red',
-                    colorInText: 'blue'
+                    color: 'MediumVioletRed',
+                    colorInText: replaceCamelCaseWithSpaces('MidnightBlue')
                 }
             } else {
                 return {
-                    color: 'blue',
-                    colorInText: 'red'
+                    color: 'MidnightBlue',
+                    colorInText: replaceCamelCaseWithSpaces('MediumVioletRed')
                 }
             }
         });
