@@ -15,7 +15,7 @@ test('button changes color to blue when clicked', () => {
     const colorButton = screen.getByRole('button', { name: 'Change to Midnight Blue' });
     fireEvent.click(colorButton);
     expect(colorButton).toHaveStyle({ backgroundColor: 'MidnightBlue'});
-    expect(colorButton.textContent).toBe('Change to Medium Violet Red');
+    expect(colorButton).toHaveTextContent('Change to Medium Violet Red');
 });
 
 test('Initial conditions', () => {
@@ -32,7 +32,7 @@ test('If button is getting diabled on checking checkbox and vice versa', () => {
     const checkbox = screen.getByRole('checkbox', { name: 'Disable button'});
     const colorButton = screen.getByRole('button', { name: 'Change to Midnight Blue' });
     fireEvent.click(checkbox);
-    expect(colorButton).not.toBeEnabled();
+    expect(colorButton).toBeDisabled();
     fireEvent.click(checkbox);
     expect(colorButton).toBeEnabled();
 });
