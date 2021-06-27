@@ -21,6 +21,8 @@ const OrderDetailsProvider = (props) => {
     scoops: new Map(),
     toppings: new Map(),
   });
+  const [orderPhase, setOrderPhase] = useState("inProgress");
+  const [orderNumber, setOrderNumber] = useState(null);
 
   const zeroFomatted = formatCurrency(0);
 
@@ -49,9 +51,32 @@ const OrderDetailsProvider = (props) => {
 
       setOptionCounts(newOptionsCounts);
     };
-    return [{ ...optionCounts, totals }, updateItemCount];
-  }, [optionCounts, totals]);
-  return <OrderDetails.Provider value={value} {...props} />;
+    const updateOrderPhase = (newOrderPhase) => {
+      setOrderPhase((prevOrderPhase) => {
+        if ("complete" === prevOrderPhase && "inProgress" === newOrderPhase) {
+          setOptionCounts({
+            scoops: new Map(),
+            toppings: new Map(),
+          });
+        }
+        return newOrderPhase;
+      });
+    };
+    const updateOrderNumber = (newOrderNumber) => {
+      setOrderNumber(newOrderNumber);
+    };
+    return [
+      { ...optionCounts, totals, orderPhase, orderNumber },
+      updateItemCount,
+      updateOrderPhase,
+      updateOrderNumber,
+    ];
+  }, [optionCounts, totals, orderPhase, orderNumber]);
+  return (
+    <OrderDetails.Provider value={value} {...props}>
+      {props.children}
+    </OrderDetails.Provider>
+  );
 };
 
 const calculateTotals = (type, optionCounts) => {

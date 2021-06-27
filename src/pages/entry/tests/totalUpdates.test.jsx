@@ -45,23 +45,17 @@ test("Update toppings total when any topping is checked or unchecked", async () 
 });
 
 describe("grand total", () => {
-  test("grand total starts at $0.00", () => {
+  test("grand total updates when scoops are added", async () => {
     render(<OrderEntry />);
     const grandTotal = screen.getByRole("heading", {
       name: /Grand total: \$/i,
     });
     expect(grandTotal).toHaveTextContent("0.00");
-  });
-  test("grand total updates when scoops are added", async () => {
-    render(<OrderEntry />);
     const vanillaInput = await screen.findByRole("spinbutton", {
       name: "Vanilla",
     });
     userEvent.clear(vanillaInput);
     userEvent.type(vanillaInput, "1");
-    const grandTotal = screen.getByRole("heading", {
-      name: /Grand total: \$/i,
-    });
     expect(grandTotal).toHaveTextContent("2.00");
     const chocolateInput = await screen.findByRole("spinbutton", {
       name: "Chocolate",
