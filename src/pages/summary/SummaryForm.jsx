@@ -38,15 +38,17 @@ const SummaryForm = () => {
 
   const placeOrder = (e) => {
     e.preventDefault();
+    updateOrderPhase("loading");
     axios
       .post("http://localhost:3030/orders", { odersDetail: "test" })
       .then((response) => {
         updateOrderNumber(response.data.orderNumber);
         updateOrderPhase("complete");
       })
-      .catch((error) => {
-        console.log(error);
-        //TODO
+      .catch(() => {
+        //console.log(error);
+        updateOrderNumber(null);
+        updateOrderPhase("complete");
       });
   };
 
@@ -65,16 +67,21 @@ const SummaryForm = () => {
     </span>
   );
 
+  const toppingSummary =
+    toppingItems.length > 0 ? (
+      <Form.Group controlId="toppings-summary">
+        <h2>Toppings: {orderDetails.totals["toppings"]}</h2>
+        <ul>{toppingItems}</ul>
+      </Form.Group>
+    ) : null;
+
   return (
     <Form>
       <Form.Group controlId="scoops-summary">
         <h2>Scoops: {orderDetails.totals["scoops"]}</h2>
         <ul>{scoopItems}</ul>
       </Form.Group>
-      <Form.Group controlId="toppings-summary">
-        <h2>Toppings: {orderDetails.totals["toppings"]}</h2>
-        <ul>{toppingItems}</ul>
-      </Form.Group>
+      {toppingSummary}
       <Form.Group controlId="total">
         <h2>Total: {orderDetails.totals["grandTotal"]}</h2>
       </Form.Group>

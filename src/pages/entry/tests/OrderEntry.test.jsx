@@ -4,6 +4,7 @@ import {
   waitFor,
 } from "../../../test-utils/testing-library-utils";
 import { rest } from "msw";
+import userEvent from "@testing-library/user-event";
 
 import { server } from "../../../mocks/server";
 import OrderEntry from "../OrderEntry";
@@ -23,5 +24,19 @@ describe("<OrderEntry />", () => {
       const alerts = await screen.findAllByRole("alert");
       expect(alerts).toHaveLength(2);
     });
+  });
+  test("Order button is disabled when there are not scoops and enabled when there is at least 1 scoop", async () => {
+    render(<OrderEntry />);
+    const orderButton = screen.getByRole("button", { name: "Order Summary" });
+    expect(orderButton).toBeDisabled();
+    const vanillaInput = await screen.findByRole("spinbutton", {
+      name: "Vanilla",
+    });
+    userEvent.clear(vanillaInput);
+    userEvent.type(vanillaInput, "1");
+    expect(orderButton).toBeEnabled();
+    userEvent.clear(vanillaInput);
+    userEvent.type(vanillaInput, "0");
+    expect(orderButton).toBeDisabled();
   });
 });

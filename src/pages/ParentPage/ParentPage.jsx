@@ -5,13 +5,17 @@ import { useOrderDetails } from "../../contexts/OrderDetails";
 
 const ParentPage = () => {
   const [orderDetails] = useOrderDetails();
-  return "inProgress" === orderDetails["orderPhase"] ? (
-    <OrderEntry />
-  ) : "review" === orderDetails["orderPhase"] ? (
-    <SummaryForm />
-  ) : (
-    <OrderConfirmation />
-  );
+  if ("loading" === orderDetails["orderPhase"]) {
+    return <div>Loading...</div>;
+  } else {
+    return "inProgress" === orderDetails["orderPhase"] ? (
+      <OrderEntry />
+    ) : "review" === orderDetails["orderPhase"] ? (
+      <SummaryForm />
+    ) : (
+      <OrderConfirmation />
+    );
+  }
 };
 
 export default ParentPage;

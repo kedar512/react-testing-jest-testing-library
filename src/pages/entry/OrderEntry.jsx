@@ -7,6 +7,8 @@ import { useOrderDetails } from "../../contexts/OrderDetails";
 const OrderEntry = () => {
   /*eslint no-unused-vars: ["error", { "varsIgnorePattern": "_updateItemCount" }]*/
   const [orderDetails, _updateItemCount, updateOrderPhase] = useOrderDetails();
+  const zeroCountPattern = /0.00/;
+  const isDisabled = zeroCountPattern.test(orderDetails.totals["scoops"]);
   return (
     <Fragment>
       <Options optionType="scoops" />
@@ -15,6 +17,7 @@ const OrderEntry = () => {
       <Button
         variant="primary"
         type="submit"
+        disabled={isDisabled}
         onClick={() => updateOrderPhase("review")}
       >
         Order Summary
